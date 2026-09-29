@@ -83,6 +83,18 @@ $estado = $_GET['estado'] ?? '';
                 </div>
             <?php endif; ?>
 
+            <?php if ($estado === 'eliminado'): ?>
+                <div class="mensaje correcto">
+                    Producto eliminado correctamente.
+                </div>
+            <?php endif; ?>
+
+            <?php if ($estado === 'error_eliminar'): ?>
+                <div class="mensaje error">
+                    No se pudo eliminar el producto.
+                </div>
+            <?php endif; ?>
+
             <form action="guardar.php" method="POST">
                 <div class="campo">
                     <label for="nombre">
@@ -183,16 +195,35 @@ $estado = $_GET['estado'] ?? '';
                                 </td>
 
                                 <td>
-                                    <?php
-                                    echo $producto['fecharegistro'];
-                                    ?>
+                                    <?php echo $producto['fecharegistro']; ?>
                                 </td>
+
                                 <td>
+                                    <!-- Botón Editar -->
                                     <a
                                         class="btn-editar"
                                         href="editar.php?id=<?php echo $producto['id']; ?>">
                                         ✏️ Editar
                                     </a>
+
+                                    <!-- Botón Eliminar -->
+                                    <form
+                                        action="eliminar.php"
+                                        method="POST"
+                                        onsubmit="return confirm('¿Seguro que deseas eliminar este producto?');"
+                                        style="display:inline;">
+
+                                        <input
+                                            type="hidden"
+                                            name="id"
+                                            value="<?php echo $producto['id']; ?>">
+
+                                        <button
+                                            type="submit"
+                                            class="btn-eliminar">
+                                            Eliminar
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
