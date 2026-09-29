@@ -19,13 +19,13 @@ $estado = $_GET['estado'] ?? '';
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+        content="width=device-width, initial-scale=1.0">
 
     <title>INVENTARIO</title>
 
@@ -70,6 +70,17 @@ $estado = $_GET['estado'] ?? '';
                     La cantidad debe ser un número.
                 </div>
             <?php endif; ?>
+            <?php if ($estado === 'eliminado'): ?>
+                <div class="mensaje correcto">
+                    Producto eliminado correctamente.
+                </div>
+            <?php endif; ?>
+
+            <?php if ($estado === 'error_eliminar'): ?>
+                <div class="mensaje error">
+                    No se pudo eliminar el producto.
+                </div>
+            <?php endif; ?>
 
             <form action="guardar.php" method="POST">
                 <div class="campo">
@@ -83,8 +94,7 @@ $estado = $_GET['estado'] ?? '';
                         name="nombre"
                         maxlength="100"
                         placeholder="Ejemplo: Café"
-                        required
-                    >
+                        required>
                 </div>
 
                 <div class="campo">
@@ -97,8 +107,7 @@ $estado = $_GET['estado'] ?? '';
                         id="cantidad"
                         name="cantidad"
                         placeholder="Ejemplo: 10"
-                        required
-                    >
+                        required>
                 </div>
 
                 <button type="submit">
@@ -127,6 +136,7 @@ $estado = $_GET['estado'] ?? '';
                             <th>Cantidad</th>
                             <th>Estado</th>
                             <th>Fecha</th>
+                            <th>Accion</th>
                         </tr>
                     </thead>
 
@@ -174,6 +184,23 @@ $estado = $_GET['estado'] ?? '';
                                     echo $producto['fecharegistro'];
                                     ?>
                                 </td>
+
+                                <td>
+                                    <form
+                                        action="eliminar.php"
+                                        method="POST"
+                                        onsubmit="return confirm('¿Seguro que deseas eliminar este producto?');"
+                                        style="display:inline;">
+                                        <input
+                                            type="hidden"
+                                            name="id"
+                                            value="<?php echo $producto['id']; ?>">
+
+                                        <button type="submit" class="btn-eliminar">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -186,4 +213,5 @@ $estado = $_GET['estado'] ?? '';
         U1. Planeación del proceso de desarrollo de software
     </footer>
 </body>
+
 </html>
