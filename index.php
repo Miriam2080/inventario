@@ -65,11 +65,24 @@ $estado = $_GET['estado'] ?? '';
                 </div>
             <?php endif; ?>
 
+            <?php if ($estado === 'nombre_corto'): ?>
+                <div class="mensaje error">
+                    El nombre debe tener mínimo 3 caracteres.
+                </div>
+            <?php endif; ?>
+
             <?php if ($estado === 'cantidad_invalida'): ?>
                 <div class="mensaje error">
                     La cantidad debe ser un número.
                 </div>
             <?php endif; ?>
+
+            <?php if ($estado === 'cantidad_cero'): ?>
+                <div class="mensaje error">
+                    La cantidad debe ser mayor a 0.
+                </div>
+            <?php endif; ?>
+
             <?php if ($estado === 'eliminado'): ?>
                 <div class="mensaje correcto">
                     Producto eliminado correctamente.
@@ -92,6 +105,7 @@ $estado = $_GET['estado'] ?? '';
                         type="text"
                         id="nombre"
                         name="nombre"
+                        minlength="3"
                         maxlength="100"
                         placeholder="Ejemplo: Café"
                         required>
@@ -106,6 +120,7 @@ $estado = $_GET['estado'] ?? '';
                         type="number"
                         id="cantidad"
                         name="cantidad"
+                        min="1"
                         placeholder="Ejemplo: 10"
                         required>
                 </div>
@@ -136,14 +151,14 @@ $estado = $_GET['estado'] ?? '';
                             <th>Cantidad</th>
                             <th>Estado</th>
                             <th>Fecha</th>
-                            <th>Accion</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         <?php if (count($productos) === 0): ?>
                             <tr>
-                                <td colspan="5" class="sin-registros">
+                                <td colspan="6" class="sin-registros">
                                     No hay productos registrados.
                                 </td>
                             </tr>
@@ -180,23 +195,32 @@ $estado = $_GET['estado'] ?? '';
                                 </td>
 
                                 <td>
-                                    <?php
-                                    echo $producto['fecharegistro'];
-                                    ?>
+                                    <?php echo $producto['fecharegistro']; ?>
                                 </td>
 
                                 <td>
+                                    <!-- Botón Editar -->
+                                    <a
+                                        class="btn-editar"
+                                        href="editar.php?id=<?php echo $producto['id']; ?>">
+                                        ✏️ Editar
+                                    </a>
+
+                                    <!-- Botón Eliminar -->
                                     <form
                                         action="eliminar.php"
                                         method="POST"
                                         onsubmit="return confirm('¿Seguro que deseas eliminar este producto?');"
                                         style="display:inline;">
+
                                         <input
                                             type="hidden"
                                             name="id"
                                             value="<?php echo $producto['id']; ?>">
 
-                                        <button type="submit" class="btn-eliminar">
+                                        <button
+                                            type="submit"
+                                            class="btn-eliminar">
                                             Eliminar
                                         </button>
                                     </form>
