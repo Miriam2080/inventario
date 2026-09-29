@@ -19,13 +19,13 @@ $estado = $_GET['estado'] ?? '';
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+        content="width=device-width, initial-scale=1.0">
 
     <title>INVENTARIO</title>
 
@@ -96,8 +96,7 @@ $estado = $_GET['estado'] ?? '';
                         minlength="3"
                         maxlength="100"
                         placeholder="Ejemplo: Café"
-                        required
-                    >
+                        required>
                 </div>
 
                 <div class="campo">
@@ -111,8 +110,7 @@ $estado = $_GET['estado'] ?? '';
                         name="cantidad"
                         min="1"
                         placeholder="Ejemplo: 10"
-                        required
-                    >
+                        required>
                 </div>
 
                 <button type="submit">
@@ -141,13 +139,14 @@ $estado = $_GET['estado'] ?? '';
                             <th>Cantidad</th>
                             <th>Estado</th>
                             <th>Fecha</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         <?php if (count($productos) === 0): ?>
                             <tr>
-                                <td colspan="5" class="sin-registros">
+                                <td colspan="6" class="sin-registros">
                                     No hay productos registrados.
                                 </td>
                             </tr>
@@ -188,6 +187,13 @@ $estado = $_GET['estado'] ?? '';
                                     echo $producto['fecharegistro'];
                                     ?>
                                 </td>
+                                <td>
+                                    <a
+                                        class="btn-editar"
+                                        href="editar.php?id=<?php echo $producto['id']; ?>">
+                                        ✏️ Editar
+                                    </a>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -200,4 +206,5 @@ $estado = $_GET['estado'] ?? '';
         U1. Planeación del proceso de desarrollo de software
     </footer>
 </body>
+
 </html>
