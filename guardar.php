@@ -15,8 +15,21 @@ if ($nombre === '' || $cantidad === '') {
     exit;
 }
 
+// El nombre debe tener mínimo 3 caracteres
+if (strlen($nombre) < 3) {
+    header('Location: index.php?estado=nombre_corto');
+    exit;
+}
+
+// La cantidad debe ser un número
 if (!is_numeric($cantidad)) {
     header('Location: index.php?estado=cantidad_invalida');
+    exit;
+}
+
+// La cantidad debe ser mayor a 0
+if ((int) $cantidad <= 0) {
+    header('Location: index.php?estado=cantidad_cero');
     exit;
 }
 
