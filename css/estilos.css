@@ -197,3 +197,20 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+
+.btn-editar {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background-color: #1f64b5;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.btn-editar:hover {
+    background-color: #174d8c;
+}
