@@ -1,39 +1,380 @@
-@media (max-width: 850px) {
-    .contenedor {
-        grid-template-columns: 1fr;
-    }
+/* ═══════════════════════════════════════════
+   1. RESET Y VARIABLES
+   ═══════════════════════════════════════════ */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-/*** ACCIÓN ELIMINAR ***/
-.btn-eliminar {
-    background-color: #dc3545;
-    color: #fff;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
+:root {
+    --azul:        #1f64b5;
+    --azul-hover:  #174d8c;
+    --rojo:        #dc3545;
+    --rojo-hover:  #b02a37;
+    --verde:       #198754;
+    --gris-texto:  #444;
+    --gris-borde:  #e0e0e0;
+    --gris-fondo:  #f4f6f9;
+    --blanco:      #ffffff;
+}
+
+/* ═══════════════════════════════════════════
+   2. BASE
+   ═══════════════════════════════════════════ */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--gris-fondo);
+    color: var(--gris-texto);
+    line-height: 1.5;
+    min-height: 100vh;
+}
+
+h1, h2 {
+    color: #1a1a1a;
+}
+
+/* ═══════════════════════════════════════════
+   3. ENCABEZADO
+   ═══════════════════════════════════════════ */
+.encabezado {
+    background: linear-gradient(135deg, #1f64b5 0%, #174d8c 100%);
+    color: var(--blanco);
+    padding: 32px 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contenido-encabezado {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.etiqueta {
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-bottom: 6px;
+}
+
+.encabezado h1 {
+    color: var(--blanco);
+    font-size: 32px;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+}
+
+.encabezado p {
+    font-size: 15px;
+    opacity: 0.9;
+}
+
+/* ═══════════════════════════════════════════
+   4. CONTENEDOR Y TARJETAS
+   ═══════════════════════════════════════════ */
+.contenedor {
+    max-width: 1100px;
+    margin: 32px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.tarjeta {
+    background-color: var(--blanco);
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.tarjeta h2 {
+    font-size: 20px;
+    margin-bottom: 6px;
+    color: #1a1a1a;
+}
+
+.descripcion {
     font-size: 14px;
+    color: #777;
+    margin-bottom: 18px;
+}
+
+/* ═══════════════════════════════════════════
+   5. FORMULARIO DE REGISTRO
+   ═══════════════════════════════════════════ */
+.campo {
+    margin-bottom: 16px;
+}
+
+.campo label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.campo input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid var(--gris-borde);
+    border-radius: 6px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    font-family: inherit;
+    background-color: #fff;
+}
+
+.campo input:focus {
+    outline: none;
+    border-color: var(--azul);
+    box-shadow: 0 0 0 3px rgba(31, 100, 181, 0.15);
+}
+
+/* Solo el botón del formulario de registro */
+.formulario form button[type="submit"] {
+    width: 100%;
+    padding: 11px;
+    background-color: var(--azul);
+    color: var(--blanco);
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
     transition: background-color 0.2s ease;
+    font-family: inherit;
 }
 
-.btn-eliminar:hover {
-    background-color: #b02a37;
+.formulario form button[type="submit"]:hover {
+    background-color: var(--azul-hover);
 }
 
-/*** ACCIÓN EDITAR ***/
+/* ═══════════════════════════════════════════
+   6. MENSAJES
+   ═══════════════════════════════════════════ */
+.mensaje {
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 16px;
+    border-left: 4px solid transparent;
+}
+
+.mensaje.correcto {
+    background-color: #e6ffec;
+    color: #0a6b2d;
+    border-left-color: var(--verde);
+}
+
+.mensaje.error {
+    background-color: #ffe6e6;
+    color: #b00020;
+    border-left-color: var(--rojo);
+}
+
+/* ═══════════════════════════════════════════
+   7. TABLA
+   ═══════════════════════════════════════════ */
+.tabla-contenedor {
+    overflow-x: auto;
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+thead {
+    background-color: #f0f4f9;
+}
+
+th {
+    text-align: left;
+    padding: 12px 10px;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid var(--gris-borde);
+    white-space: nowrap;
+}
+
+td {
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--gris-borde);
+    vertical-align: middle;
+}
+
+tbody tr:hover {
+    background-color: #f9fbfd;
+}
+
+.sin-registros {
+    text-align: center;
+    color: #999;
+    padding: 24px;
+    font-style: italic;
+}
+
+/* ═══════════════════════════════════════════
+   8. ETIQUETAS DE ESTADO
+   ═══════════════════════════════════════════ */
+.estado {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.estado.disponible {
+    background-color: #e6ffec;
+    color: #0a6b2d;
+}
+
+.estado.agotado {
+    background-color: #ffe6e6;
+    color: #b00020;
+}
+
+/* ═══════════════════════════════════════════
+   9. ACCIONES (celda con botones editar/eliminar)
+   ═══════════════════════════════════════════ */
+.acciones {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+/* El form del botón eliminar no debe romper el flex */
+.acciones form.form-eliminar {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    width: auto;
+}
+
+/* ─── Botón Editar ─── */
 .btn-editar {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
-    padding: 8px 12px;
-    background-color: #1f64b5;
-    color: white;
+    padding: 6px 12px;
+    background-color: var(--azul);
+    color: #fff;
     text-decoration: none;
     border-radius: 6px;
     font-weight: 600;
     font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    white-space: nowrap;
 }
 
 .btn-editar:hover {
-    background-color: #174d8c;
+    background-color: var(--azul-hover);
+}
+
+.btn-editar:active {
+    transform: scale(0.97);
+}
+
+/* ─── Botón Eliminar ─── */
+.btn-eliminar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background-color: var(--rojo);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    white-space: nowrap;
+    font-family: inherit;
+}
+
+.btn-eliminar:hover {
+    background-color: var(--rojo-hover);
+}
+
+.btn-eliminar:active {
+    transform: scale(0.97);
+}
+
+/* Fuerza mayor especificidad para el botón eliminar dentro del form */
+form.form-eliminar button.btn-eliminar {
+    background-color: var(--rojo);
+    color: #fff;
+    width: auto;
+}
+
+form.form-eliminar button.btn-eliminar:hover {
+    background-color: var(--rojo-hover);
+}
+
+/* ═══════════════════════════════════════════
+   10. FOOTER
+   ═══════════════════════════════════════════ */
+footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 13px;
+    color: #888;
+    margin-top: 40px;
+}
+
+/* ═══════════════════════════════════════════
+   11. RESPONSIVE
+   ═══════════════════════════════════════════ */
+@media (max-width: 850px) {
+    .contenedor {
+        grid-template-columns: 1fr;
+    }
+
+    .encabezado h1 {
+        font-size: 24px;
+    }
+
+    .acciones {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .btn-editar,
+    .btn-eliminar {
+        width: 100%;
+    }
+}
+
+.btn-cancelar{
+    background-color: var(--rojo);
+    width: 100%;
+    padding: 11px;
+    color: var(--blanco);
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-family: inherit;
+    text-decoration:none;
+}
+
+.btn-cancelar:hover{
+    background-color: var(--rojo-hover);
 }

@@ -101,8 +101,9 @@ if (!$producto) {
                 <button type="submit">
                     Guardar cambios
                 </button>
-
-                <a href="index.php">
+<br>
+<br>
+                <a href="index.php" class="btn-cancelar">
                     Cancelar
                 </a>
 
