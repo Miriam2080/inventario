@@ -1,38 +1,47 @@
+
 <?php
 
 require_once __DIR__ . '/config/conexion.php';
+require_once __DIR__ . '/src/Validaciones.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: index.php');
     exit;
 }
 
-$nombre = trim($_POST['nombre'] ?? '');
+//Obtener los datos del formulario
+$nombre = $_POST['nombre'] ?? '';
 $cantidad = $_POST['cantidad'] ?? '';
 
+// Comprobar que los datos tengan el tipo esperado
+if (!is_string($nombre) || !is_string($cantidad)) {
+    header('Location: index.php?estado=incompleto');
+    exit;
+}
+
+// Eliminar espacios innecesarios
+$nombre = trim($nombre);
+$cantidad = trim($cantidad);
+
+// Verificar campos vacíos
 if ($nombre === '' || $cantidad === '') {
     header('Location: index.php?estado=incompleto');
     exit;
 }
 
-// El nombre debe tener mínimo 3 caracteres
-if (strlen($nombre) < 3) {
-    header('Location: index.php?estado=nombre_corto');
+// Validar el nombre del producto
+if (!validarNombreProducto($nombre)) {
+    header('Location: index.php?estado=nombre_invalido');
     exit;
 }
 
-// La cantidad debe ser un número
-if (!is_numeric($cantidad)) {
+// Validar la cantidad
+if (!validarCantidadProducto($cantidad)) {
     header('Location: index.php?estado=cantidad_invalida');
     exit;
 }
 
-// La cantidad debe ser mayor a 0
-if ((int) $cantidad <= 0) {
-    header('Location: index.php?estado=cantidad_cero');
-    exit;
-}
-
+// Guardar en la base de datos
 $sentencia = $conexion->prepare(
     'INSERT INTO productos (nombre, cantidad)
      VALUES (:nombre, :cantidad)'
@@ -43,5 +52,6 @@ $sentencia->execute([
     'cantidad' => (int) $cantidad
 ]);
 
+// Regresar al formulario
 header('Location: index.php?estado=guardado');
 exit;
