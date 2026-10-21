@@ -43,14 +43,11 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
-          extensions: pdo_mysql
+          extensions: pdo_mysql, mbstring
 
       - name: Verificar sintaxis
         run: |
-          php -l src/validaciones.php
-          php -l tests/test_validaciones.php
-          php -l tests/conexion_pruebas.php
-          php -l tests/test_integracion_productos.php
+          find . -type f -name "*.php" -print0 | xargs -0 -n1 php -l
 
       - name: Crear tabla de pruebas
         env:

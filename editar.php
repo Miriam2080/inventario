@@ -1,10 +1,11 @@
 <?php
 
 require_once __DIR__ . '/config/conexion.php';
+require_once __DIR__ . '/src/validaciones.php';
 
 $id = $_GET['id'] ?? null;
 
-if (!$id || !is_numeric($id)) {
+if (!validarIdProducto($id)) {
     header('Location: index.php');
     exit;
 }
@@ -77,6 +78,8 @@ if (!$producto) {
                         type="text"
                         id="nombre"
                         name="nombre"
+                        minlength="3"
+                        maxlength="50"
                         value="<?php
                         echo htmlspecialchars($producto['nombre']);
                         ?>"
@@ -93,6 +96,9 @@ if (!$producto) {
                         type="number"
                         id="cantidad"
                         name="cantidad"
+                        min="0"
+                        max="2147483647"
+                        step="1"
                         value="<?php echo $producto['cantidad']; ?>"
                         required
                     >

@@ -40,3 +40,19 @@ Finalmente abro el proyecto desde el navegador con:
 http://localhost/inventario
 
 Desde ahí puedo visualizar el inventario y agregar nuevos productos.
+
+## Configuración de conexión y pruebas
+
+Antes de abrir la aplicación, copia config/conexion.ejemplo.php a
+config/conexion.php y configura las credenciales de MariaDB. También puedes
+definir DB_HOST, DB_NAME, DB_USER y DB_PASSWORD en el entorno del servidor.
+
+Los nombres admiten de 3 a 50 caracteres. Las cantidades deben ser enteros:
+de 1 a 2147483647 al registrar; al editar se permite 0 (sin existencia).
+
+Pruebas unitarias: php tests/test_validaciones.php
+
+Para las pruebas de integración, crea una base independiente llamada
+inventariopruebas e importa tests/estructura_pruebas.sql. Configura las variables
+DB_* para esa base y ejecuta php tests/test_integracion_productos.php.
+La prueba utiliza una transacción que revierte sus cambios.

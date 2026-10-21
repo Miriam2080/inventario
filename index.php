@@ -3,6 +3,8 @@ session_start();
 
 require_once __DIR__ . '/config/conexion.php';
 
+$estado = $_GET['estado'] ?? '';
+
 // ─────────────────────────────────────────────
 // 1. Obtener productos (con manejo de errores)
 // ─────────────────────────────────────────────
@@ -22,7 +24,7 @@ try {
 // ─────────────────────────────────────────────
 // 2. Estado, error y valores previos
 // ─────────────────────────────────────────────
-$estado = $_GET['estado'] ?? '';
+
 
 // Errores detallados (vienen del procesar.php)
 $error = $_SESSION['error'] ?? null;
@@ -66,6 +68,10 @@ unset($_SESSION['error'], $_SESSION['old']);
                 </div>
             <?php endif; ?>
 
+            <?php if ($estado === 'actualizado'): ?>
+                <div class="mensaje correcto">Producto actualizado correctamente.</div>
+            <?php endif; ?>
+
             <?php if ($estado === 'eliminado'): ?>
                 <div class="mensaje correcto">
                     Producto eliminado correctamente.
@@ -82,13 +88,13 @@ unset($_SESSION['error'], $_SESSION['old']);
                 <div class="mensaje error">
                     Debe completar todos los campos.
                 </div>
-            <?php elseif ($estado === 'nombre_corto'): ?>
+            <?php elseif ($estado === 'nombre_corto' || $estado === 'nombre_invalido'): ?>
                 <div class="mensaje error">
-                    El nombre debe tener mínimo 3 caracteres.
+                    El nombre debe tener entre 3 y 50 caracteres.
                 </div>
             <?php elseif ($estado === 'cantidad_invalida'): ?>
                 <div class="mensaje error">
-                    La cantidad debe ser un número.
+                    La cantidad debe ser un entero entre 0 y 2147483647 (mínimo 1 al registrar).
                 </div>
             <?php elseif ($estado === 'cantidad_cero'): ?>
                 <div class="mensaje error">
@@ -98,6 +104,8 @@ unset($_SESSION['error'], $_SESSION['old']);
                 <div class="mensaje error">
                     Ocurrió un error con la base de datos.
                 </div>
+            <?php elseif ($estado === 'error_actualizar'): ?>
+                <div class="mensaje error">No se pudo actualizar el producto.</div>
             <?php elseif ($estado === 'error_eliminar'): ?>
                 <div class="mensaje error">
                     No se pudo eliminar el producto.
@@ -112,7 +120,7 @@ unset($_SESSION['error'], $_SESSION['old']);
                         id="nombre"
                         name="nombre"
                         minlength="3"
-                        maxlength="100"
+                        maxlength="50"
                         placeholder="Ejemplo: Café"
                         value="<?php echo htmlspecialchars($old['nombre'] ?? '', ENT_QUOTES, 'UTF-8'); ?>"
                         required>
@@ -125,7 +133,8 @@ unset($_SESSION['error'], $_SESSION['old']);
                         id="cantidad"
                         name="cantidad"
                         min="1"
-                        step="any"
+                        step="1"
+                        max="2147483647"
                         placeholder="Ejemplo: 10"
                         value="<?php echo htmlspecialchars($old['cantidad'] ?? '', ENT_QUOTES, 'UTF-8'); ?>"
                         required>
@@ -240,7 +249,8 @@ unset($_SESSION['error'], $_SESSION['old']);
                                         </form>
                                     </div>
                                 </td>
-                            <?php endforeach; ?>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>

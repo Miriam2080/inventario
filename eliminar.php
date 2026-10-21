@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/config/conexion.php';
+require_once __DIR__ . '/src/validaciones.php';
 
 // Solo aceptar POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -11,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $id = $_POST['id'] ?? null;
 
 // Validar que el id sea un número entero válido
-if (!is_numeric($id) || (int)$id <= 0) {
+if (!validarIdProducto($id)) {
     header('Location: index.php?estado=error_eliminar');
     exit;
 }

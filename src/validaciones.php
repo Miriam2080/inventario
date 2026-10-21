@@ -18,6 +18,15 @@ function validarCantidadProducto($cantidad): bool
     return filter_var(
         $cantidad,
         FILTER_VALIDATE_INT,
-        ['options' => ['min_range' => 1]]
+        ['options' => ['min_range' => 1, 'max_range' => 2147483647]]
     ) !== false;
+}
+
+
+function validarIdProducto($id): bool
+{
+    return (is_string($id) || is_int($id))
+        && filter_var($id, FILTER_VALIDATE_INT, [
+            'options' => ['min_range' => 1, 'max_range' => 4294967295]
+        ]) !== false;
 }

@@ -2,7 +2,7 @@
 <?php
 
 require_once __DIR__ . '/config/conexion.php';
-require_once __DIR__ . '/src/Validaciones.php';
+require_once __DIR__ . '/src/validaciones.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: index.php');
@@ -41,17 +41,16 @@ if (!validarCantidadProducto($cantidad)) {
     exit;
 }
 
-// Guardar en la base de datos
-$sentencia = $conexion->prepare(
-    'INSERT INTO productos (nombre, cantidad)
-     VALUES (:nombre, :cantidad)'
-);
+try {
+    $sentencia = $conexion->prepare(
+        'INSERT INTO productos (nombre, cantidad) VALUES (:nombre, :cantidad)'
+    );
+    $sentencia->execute(['nombre' => $nombre, 'cantidad' => (int) $cantidad]);
+} catch (PDOException $error) {
+    error_log('Error al registrar producto: ' . $error->getMessage());
+    header('Location: index.php?estado=error_bd');
+    exit;
+}
 
-$sentencia->execute([
-    'nombre' => $nombre,
-    'cantidad' => (int) $cantidad
-]);
-
-// Regresar al formulario
 header('Location: index.php?estado=guardado');
 exit;
